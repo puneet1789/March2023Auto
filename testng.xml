@@ -1,0 +1,20 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+<suite name = "Demo test - testng March Batch 1 2 3">
+	<parameter name="url" value="any Value" />
+	
+	<listeners>
+		<listener class-name = "march.FrameworkListners" /> 
+	</listeners>
+	
+	
+   <test name = "Demo test 123">
+   		 	
+      	<classes>    		
+         	<class name = "march.AnnotationsTest" />
+         	
+         	<parameter name="url1" value="any Value1" />
+      	</classes>
+   </test>
+</suite>
