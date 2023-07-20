@@ -35,7 +35,7 @@ public class BaseTest {
 			FileInputStream fStr = new FileInputStream(new File("./src/test/resources/testConfigs/config.properties"));
 			prop = new Properties();
 			prop.load(fStr);
-			
+
 			dbCap = new LoadExternalDataUtility(prop.getProperty("testDataPath"));
 			
 			extent = new ExtentReports();
@@ -69,8 +69,21 @@ public class BaseTest {
 	
 	@BeforeClass
 	public void navigate() {
-		 logger.info("Browser Navigated to url : https://www.ebay.com/");
-		 driver.navigate().to("https://www.ebay.com/");
+		 logger.info("Browser Navigated to url");
+		 String env = System.getenv("env");
+		 if (env != null) {
+			 if (env.equals("sit")) {
+				 driver.navigate().to(prop.getProperty("url_SIT"));
+			 } else if (env.equals("uat")) {
+				 driver.navigate().to(prop.getProperty("url_UAT"));
+			 } else {
+				 logger.info("No Env set present in the list taking default");
+				 driver.navigate().to(prop.getProperty("url_default"));
+			 }
+		 } else {
+			 logger.info("No Env set taking default");
+			 driver.navigate().to(prop.getProperty("url_default"));
+		 }
 	}
 	
 	@AfterSuite
