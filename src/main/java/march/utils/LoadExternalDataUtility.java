@@ -2,6 +2,7 @@ package march.utils;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -26,14 +27,20 @@ public class LoadExternalDataUtility {
 		testData = readWorkbook(path);
 	}
 
-	public Map<String, List<List<String>>> readWorkbook(String path) throws IOException {
+	public Map<String, List<List<String>>> readWorkbook(String path) {
 		logger.info("Reading workbook at path : " + path);
 		List<List<String>> alllist = new ArrayList<List<String>>();
 		Map<String,List<List<String>>> data= new HashMap< String,List<List<String>>>();
 		
-		FileInputStream fis = new FileInputStream(new File(path));
+		FileInputStream fis;
+		try {
+			fis = new FileInputStream(new File(path));
+
 		
-		XSSFWorkbook workbook = new XSSFWorkbook(fis); 		//workbook
+		XSSFWorkbook workbook;
+
+		workbook = new XSSFWorkbook(fis);
+				//workbook
 		Iterator<Sheet> itrsheet = workbook.iterator();		//Sheet iterator
 		while(itrsheet.hasNext()) {							//while loop for sheet iterator
 			XSSFSheet sheet = (XSSFSheet) itrsheet.next();	//sheet
@@ -62,6 +69,14 @@ public class LoadExternalDataUtility {
 		}
 		
 		logger.info("Reading workbook -- Completed ===> " + data);
+		
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
 		return data;
 	}
 	
